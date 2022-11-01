@@ -1,12 +1,9 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
+import { Bookings } from "./features/bookings/pages/Bookings";
 
 function App() {
-  return (
-    <div>
-      <h1 className="text-3xl font-bold ">Hello world!</h1>
-    </div>
-  );
+  return <Bookings />;
 }
 
 export default App;
