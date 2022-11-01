@@ -1,3 +1,12 @@
+interface BookingCardLayoutProps {
+  name: React.ReactNode;
+  startDate: React.ReactNode;
+  endDate: React.ReactNode;
+  actions: React.ReactNode;
+  errorMessage?: React.ReactNode;
+  "data-testid"?: string;
+}
+
 export const BookingCardLayout = ({
   name,
   startDate,
@@ -27,11 +36,3 @@ export const BookingCardLayout = ({
     </div>
   );
 };
-interface BookingCardLayoutProps {
-  name: React.ReactNode;
-  startDate: React.ReactNode;
-  endDate: React.ReactNode;
-  actions: React.ReactNode;
-  errorMessage?: React.ReactNode;
-  "data-testid"?: string;
-}
