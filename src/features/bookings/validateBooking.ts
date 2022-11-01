@@ -2,6 +2,7 @@ import { Booking } from "./types";
 
 export const hasOverlap = (booking: Booking, otherBookings: Booking[]) => {
   const { startDate, endDate } = booking;
+  if (!otherBookings.length) return false;
 
   const overlapped = otherBookings.find(
     (other) =>
