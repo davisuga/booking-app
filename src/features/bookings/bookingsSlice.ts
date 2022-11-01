@@ -35,18 +35,16 @@ export const bookingSlice = createSlice({
         (booking) => booking.id !== action.payload.id
       );
 
-      ({
+      return {
         ...state,
         bookings: state.bookings.map((booking) => {
-          if (
+          const shouldUpdate =
             booking.id === action.payload.id &&
-            !hasOverlap({ ...booking, ...action.payload }, otherBookings)
-          ) {
-            return { ...booking, ...action.payload };
-          }
-          return booking;
+            !hasOverlap({ ...booking, ...action.payload }, otherBookings);
+
+          return shouldUpdate ? { ...booking, ...action.payload } : booking;
         }),
-      });
+      };
     },
   },
 });
