@@ -52,6 +52,8 @@ describe("Booking state", () => {
   });
 
   it("Updates a booking", () => {
+    const oldState = store.getState().bookings.bookings;
+
     const updatedBooking = {
       id: initialBooking.id,
       name: "New Name",
@@ -61,7 +63,8 @@ describe("Booking state", () => {
     store.dispatch(editBooking(updatedBooking));
 
     const { bookings: newBookings } = store.getState().bookings;
-    expect(newBookings[0]).toStrictEqual(updatedBooking);
+
+    expect(newBookings[0].name).not.toStrictEqual(oldState[0].name);
   });
 
   it("Deletes a booking", () => {
