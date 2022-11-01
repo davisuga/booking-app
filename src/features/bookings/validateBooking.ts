@@ -13,10 +13,14 @@ export const hasOverlap = (booking: Booking, otherBookings: Booking[]) => {
   return !!overlapped;
 };
 
-export const hasOverlapOnUpdate = (
+export const isIntervalWellDefined = (
+  start: number | Date,
+  end: number | Date
+) => start < end;
+
+export const isBookingAdditionValid = (
   booking: Booking,
-  bookingUpdate: { id: string } & Partial<Booking>,
   otherBookings: Booking[]
-) => {
-  return !!hasOverlap({ ...booking, ...bookingUpdate }, otherBookings);
-};
+) =>
+  !hasOverlap(booking, otherBookings) &&
+  isIntervalWellDefined(booking.startDate, booking.endDate);

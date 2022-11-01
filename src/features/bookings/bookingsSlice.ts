@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Booking } from "./types";
-import { hasOverlap, hasOverlapOnUpdate } from "./validateBooking";
+import { isBookingAdditionValid } from "./validateBooking";
 
 export interface BookingState {
   bookings: Booking[];
@@ -16,7 +16,7 @@ export const bookingSlice = createSlice({
   initialState,
   reducers: {
     addBooking: (state, action: PayloadAction<Booking>) =>
-      hasOverlap(action.payload, state.bookings)
+      !isBookingAdditionValid(action.payload, state.bookings)
         ? state
         : { ...state, bookings: [...state.bookings, action.payload] },
 
@@ -40,7 +40,10 @@ export const bookingSlice = createSlice({
         bookings: state.bookings.map((booking) => {
           const shouldUpdate =
             booking.id === action.payload.id &&
-            !hasOverlap({ ...booking, ...action.payload }, otherBookings);
+            isBookingAdditionValid(
+              { ...booking, ...action.payload },
+              otherBookings
+            );
 
           return shouldUpdate ? { ...booking, ...action.payload } : booking;
         }),
