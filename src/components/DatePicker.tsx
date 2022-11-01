@@ -35,7 +35,7 @@ export const DatePicker = ({
 
   if (!editable)
     return (
-      <div data-testid={props["data-testid"]} className="text-lg py-1">
+      <div data-testid={props["data-testid"]} className="text-lg py-2">
         {formatDate(date)}
       </div>
     );
@@ -43,7 +43,7 @@ export const DatePicker = ({
   return (
     <div>
       <div
-        className="text-lg"
+        className="text-lg p-1 py-1 rounded-md border-gray border"
         onClick={(e) => {
           setOpen(!open);
           setReferenceElement(e.currentTarget);

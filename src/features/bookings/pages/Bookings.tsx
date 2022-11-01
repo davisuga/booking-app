@@ -4,7 +4,7 @@ import { Booking } from "../types";
 import { useAppSelector, useAppDispatch } from "../../../store";
 import { BookingCard } from "../components/Booking";
 import { addBooking, editBooking, removeBooking } from "../bookingsSlice";
-import { hasOverlap } from "../validateBooking";
+import { hasOverlap, isBookingAdditionValid } from "../validateBooking";
 
 export const Bookings = () => {
   const bookings = useAppSelector((s) => s.bookings.bookings);
@@ -29,31 +29,42 @@ export const Bookings = () => {
     const otherBookings = bookings.filter(
       (booking) => booking.id !== savedBooking.id
     );
-    if (hasOverlap(savedBooking, otherBookings)) return;
+    if (!isBookingAdditionValid(savedBooking, otherBookings)) return;
     setBookingUnderEdition(null);
     dispatch(editBooking(savedBooking));
   };
 
   const onClickSaveNew = (newBooking: Booking): void => {
-    if (hasOverlap(newBooking, bookings)) return;
+    if (!isBookingAdditionValid(newBooking, bookings)) return;
     dispatch(addBooking(newBooking));
     setBookingToAdd(undefined);
   };
 
   return (
-    <div className="flex flex-col p-4">
-      <h1 className="text-3xl font-bold">Bookings</h1>
-      <div className="flex flex-row">
-        <div className="flex flex-col gap-2">
-          <div className="p-2">
-            <button
-              className="flex flex-row bg-blue-500 text-white p-2 rounded-full hover:bg-blue-700 hover:scale-105 transition-all"
-              onClick={onClickAdd}
-              data-testid="add-booking"
-            >
-              Add booking
-            </button>
+    <div className="flex-1 flex">
+      <div className="flex flex-col p-4 flex-1 justify-center items-center gap-2">
+        <h1 className="text-3xl font-bold">Bookings</h1>
+        <div className="p-2">
+          <button
+            className="flex flex-row bg-blue-500 text-white p-2 rounded-full hover:bg-blue-700 hover:scale-105 transition-all"
+            onClick={onClickAdd}
+            data-testid="add-booking"
+          >
+            Add booking
+          </button>
+        </div>
+        {bookingToAdd && (
+          <div className="flex flex-row">
+            <BookingCard
+              data-testid="add-booking-card"
+              onSaved={onClickSaveNew}
+              onCancel={() => setBookingToAdd(undefined)}
+              isEditing
+              booking={bookingToAdd}
+            />
           </div>
+        )}
+        <div className="flex flex-row gap-2 flex-wrap justify-center">
           {bookings.map((b) => (
             <div key={b.id} className="flex flex-row">
               <BookingCard
@@ -68,17 +79,7 @@ export const Bookings = () => {
               />
             </div>
           ))}
-          {bookingToAdd && (
-            <div className="flex flex-row">
-              <BookingCard
-                data-testid="add-booking-card"
-                onSaved={onClickSaveNew}
-                onCancel={() => setBookingToAdd(undefined)}
-                isEditing
-                booking={bookingToAdd}
-              />
-            </div>
-          )}
+          {bookings.length % 2 != 0 && <div className="flex flex-1 max-w-25" />}
         </div>
       </div>
     </div>

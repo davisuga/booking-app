@@ -18,7 +18,7 @@ export const BookingCardLayout = ({
   return (
     <div
       data-testid={props["data-testid"]}
-      className="flex flex-col bg-white rounded-lg shadow-lg p-4"
+      className="flex flex-1 flex-col bg-white rounded-lg shadow-lg p-4"
     >
       <div className="flex flex-col justify-between gap-2">
         {name}
