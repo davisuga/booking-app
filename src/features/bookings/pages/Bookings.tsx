@@ -4,7 +4,7 @@ import { Booking } from "../types";
 import { useAppSelector, useAppDispatch } from "../../../store";
 import { BookingCard } from "../components/Booking";
 import { addBooking, editBooking, removeBooking } from "../bookingsSlice";
-import { hasOverlap, isBookingAdditionValid } from "../validateBooking";
+import { isBookingAdditionValid } from "../validateBooking";
 
 export const Bookings = () => {
   const bookings = useAppSelector((s) => s.bookings.bookings);
@@ -54,32 +54,28 @@ export const Bookings = () => {
           </button>
         </div>
         {bookingToAdd && (
-          <div className="flex flex-row">
-            <BookingCard
-              data-testid="add-booking-card"
-              onSaved={onClickSaveNew}
-              onCancel={() => setBookingToAdd(undefined)}
-              isEditing
-              booking={bookingToAdd}
-            />
-          </div>
+          <BookingCard
+            data-testid="add-booking-card"
+            onSaved={onClickSaveNew}
+            onCancel={() => setBookingToAdd(undefined)}
+            isEditing
+            booking={bookingToAdd}
+          />
         )}
         <div className="flex flex-row gap-2 flex-wrap justify-center">
-          {bookings.map((b) => (
-            <div key={b.id} className="flex flex-row">
-              <BookingCard
-                onDelete={() => {
-                  dispatch(removeBooking(b.id));
-                }}
-                isEditing={bookingUnderEdition?.id === b.id}
-                onSaved={onClickSave}
-                onEdit={() => setBookingUnderEdition(b)}
-                booking={b}
-                onCancel={() => setBookingUnderEdition(null)}
-              />
-            </div>
+          {bookings.map((currentBooking) => (
+            <BookingCard
+              key={currentBooking.id}
+              onDelete={() => {
+                dispatch(removeBooking(currentBooking.id));
+              }}
+              isEditing={bookingUnderEdition?.id === currentBooking.id}
+              onSaved={onClickSave}
+              onEdit={() => setBookingUnderEdition(currentBooking)}
+              booking={currentBooking}
+              onCancel={() => setBookingUnderEdition(null)}
+            />
           ))}
-          {bookings.length % 2 != 0 && <div className="flex flex-1 max-w-25" />}
         </div>
       </div>
     </div>
