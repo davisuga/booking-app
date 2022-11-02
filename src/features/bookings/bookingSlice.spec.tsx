@@ -1,18 +1,4 @@
-// // The two tests marked with concurrent will be run in parallel
-// describe("suite", () => {
-//   it("serial test", async () => {
-//     /* ... */
-//   });
-//   it.concurrent("concurrent test 1", async () => {
-//     assert(true);
-//   });
-//   it.concurrent("concurrent test 2", async () => {
-//     assert(true);
-//   });
-// });
 import { describe, expect, it, test } from "vitest";
-// import { render, screen } from "@testing-library/react";
-// import React from "react";
 import { store } from "../../store";
 import { addBooking, editBooking, removeBooking } from "./bookingsSlice";
 import { addDays } from "date-fns/fp";
