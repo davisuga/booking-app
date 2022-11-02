@@ -20,17 +20,16 @@ export const BookingCardLayout = ({
       data-testid={props["data-testid"]}
       className="flex flex-1 flex-col bg-white rounded-lg shadow-lg p-4"
     >
-      <div className="flex flex-col justify-between gap-2">
+      <div className="flex flex-1 flex-col justify-between gap-2">
         {name}
-        <div className="flex items-center gap-2 flex-row">
+        <div className="flex items-center gap-2 justify-between flex-row">
           {errorMessage}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-1 items-center gap-2">
             {startDate}
             {" to "}
             {endDate}
           </div>
-
-          {actions}
+          <div className="flex ">{actions}</div>
         </div>
       </div>
     </div>
